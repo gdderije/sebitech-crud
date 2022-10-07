@@ -16,7 +16,6 @@
       <h2>Home Page</h2>
     </div>
     <div class="content">
-		<!-- notification message -->
 		<?php if (isset($_SESSION['success'])) : ?>
 			<div class="error success" >
 				<h3>
@@ -45,5 +44,6 @@
 			</div>
 		</div>
 	</div>
+	<button class="button-52" role="button"> <a href="administrator/companies.php">Manage Companies</button>
 </body>
 </html>
