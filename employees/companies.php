@@ -4,22 +4,20 @@
   	header('location: ../login.php');
   }
 ?>
-<?php include('functions/php_code.php'); ?>
+<?php include('functions/php_code1.php'); ?>
 <?php
   if (isset($_GET['edit'])) {
     $id = $_GET['edit'];
     $update = true;
-    $record = mysqli_query($db, "SELECT * FROM employees_db_table WHERE id = $id");
+    $record = mysqli_query($db, "SELECT * FROM companies_db_table WHERE id = $id");
 
     if ($record->num_rows == 1) {
       $n = mysqli_fetch_array($record);
-      $firstname = $n['firstname'];
-      $lastname = $n['lastname'];
+      $company_id = $n['company_id'];
       $company_name = $n['company_name'];
       $email = $n['email'];
-      $username = $n['username'];
-      $phone = $n['phone'];
-      $user_type = $n['user_type'];
+      $filename = $n['filename'];
+      $website = $n['website'];
     }
   }
 ?>
@@ -51,20 +49,12 @@
       <div class = "sidebar-menu">
         <ul>
           <li>
-            <a href = "home.php"><span class = "las la-igloo"></span>
+            <a href = "../index.php" ><span class = "las la-igloo"></span>
             <span>Dashboard</span></a>
           </li>
           <li>
-            <a href = "companies.php"><span class = "las la-clipboard-list"></span>
+            <a href = "companies.php" class = "active"><span class = "las la-clipboard-list"></span>
             <span>Manage Companies</span></a>
-          </li>
-          <li>
-            <a href = "employees.php" class = "active"><span class = "las la-users"></span>
-            <span>Manage Employees</span></a>
-          </li>
-          <li>
-            <a href = "create_user.php"><span class = "las la-plus"></span>
-            <span>Add User</span></a>
           </li>
         </ul>
       </div>
@@ -76,7 +66,7 @@
           <label for = "nav-toggle">
             <span class = "las la-bars" style = "cursor: pointer;"></span>
           </label>
-          Manage Employees
+          Manage Companies
         </h2>
 
         <div class = "search-wrapper">
@@ -85,14 +75,14 @@
         </div>
 
         <div class = "user-wrapper">
-					<img src="../images/admin_profile.png"  alt="user_profile">
+					<img src="../images/user_profile.png"  alt="user_profile">
           <?php  if (isset($_SESSION['user'])) : ?>
   					<strong><?php echo $_SESSION['user']['username']; ?></strong>
 
   					<small>
   						<!-- <i style="color: #888;">(<?php echo ucfirst($_SESSION['user']['user_type']); ?>)</i> -->
   						<br>
-  						<a href="home.php?logout='1'" style="color: red;">logout</a>
+  						<a href="../index.php?logout='1'" style="color: red;">logout</a>
   					</small>
 
   				<?php endif ?>
@@ -114,87 +104,67 @@
                 </div>
               <?php endif ?>
 
-              <?php $results = mysqli_query($db, "SELECT *FROM employees_db_table"); ?>
+              <?php $results = mysqli_query($db, "SELECT *FROM companies_db_table"); ?>
 
               <table>
                 <thead>
                   <tr>
-                    <th>First Name</th>
-                    <th>Last Name</th>
+                    <th>Company ID</th>
                     <th>Company Name</th>
                     <th>Email</th>
-                    <th>Username</th>
-                    <th>Contact Number</th>
-                    <th>User Type</th>
+                    <th>Company Logo</th>
+                    <th>Website</th>
                     <th colspan = "2">Action</th>
                   </tr>
                 </thead>
 
                 <?php while ($row = mysqli_fetch_array($results)) { ?>
                   <tr>
-                    <td><?php echo $row['firstname']; ?></td>
-                    <td><?php echo $row['lastname']; ?></td>
-                    <td><?php echo $row['company_name']; ?></td>
+                    <td><?php echo $row['id']; ?></td>
                     <td><?php echo $row['email']; ?></td>
-                    <td><?php echo $row['username']; ?></td>
-                    <td><?php echo $row['phone']; ?></td>
-                    <td><?php echo $row['user_type']; ?></td>
-                    <td><a href = "employees.php?edit=<?php echo $row['id']; ?>" class = "edit_btn">Edit</a></td>
-                    <td><a href = "functions/php_code.php?del=<?php echo $row['id']; ?>" class = "del_btn">Delete</a></td>
+                    <td>
+                      <div id="display-image">
+                      <?php
+                          $query = "SELECT * FROM companies_db_table";
+                          $result = mysqli_query($db, $query);
+
+                          while ($data = mysqli_fetch_assoc($result)) {
+                            ?>
+                          <img class = "upload" src="../images/company_logo/<?php echo $data['filename']; ?>">
+
+                      <?php
+                          }
+                      ?>
+                      </div>
+                    </td>
+                    <td><a href = "<?php echo $row['website']; ?>"><?php echo $row['website']; ?></a></td>
+                    <td><a href = "companies.php?edit=<?php echo $row['id']; ?>" class = "edit_btn">Edit</a></td>
+                    <td><a href = "functions/php_code1.php?del=<?php echo $row['id']; ?>" class = "del_btn">Delete</a></td>
                   </tr>
                 <?php } ?>
               </table>
 
-              <form method = "post" action = "functions/php_code.php">
-                <div class = "input-group">
-                  <input type = "hidden" name = "id" value = "<?php echo $id; ?>"
-                </div>
-                <div class = "input-group">
-                  <label>First Name</label>
-                  <input type = "text" name = "firstname" value = "<?php echo $firstname; ?>" required>
-                </div>
-                <div class = "input-group">
-                  <label>Last Name</label>
-                  <input type = "text" name = "lastname" value = "<?php echo $lastname; ?>" required>
-                </div>
+              <form method = "post" action = "functions/php_code1.php">
+                <!-- <div class = "input-group">
+                  <label>Company ID</label>
+                  <?php echo $id; ?>
+                </div> -->
                 <div class = "input-group">
                   <label>Company Name</label>
-                  <select name = "company_id">
-                    <option value = "">Company Name</option>
-                    <?php
-                    $sql = "SELECT * FROM companies_db_table";
-                    $all_categories = mysqli_query($db, $sql);
-                        while ($category = mysqli_fetch_array(
-                                $all_categories, MYSQLI_ASSOC)):;
-                    ?>
-                    <option value = "<?php echo $category["company_name"];?>">
-                    <?php echo $category["company_name"];?>
-                    </option>
-                    <?php
-                        endwhile;
-                    ?>
-                </select>
-                </div>
-                <div class = "input-group">
-                  <label>Contact Number</label>
-                  <input type = "text" name = "phone" value = "<?php echo $phone ?>">
-                </div>
-                <div class = "input-group">
-                  <label>Username</label>
-                  <input type = "text" name = "username" value = "<?php echo $username; ?>">
+                  <input type = "text" name = "company_name" value = "<?php echo $company_name; ?>" required>
                 </div>
                 <div class = "input-group">
                   <label>Email</label>
                   <input type = "text" name = "email" value = "<?php echo $email; ?>">
                 </div>
-                <div class="input-group">
-            			<label>User type</label>
-            			<select name="user_type" id="user_type" >
-            				<option value="">User Type</option>
-            				<option value="employee">Employee</option>
-            				<option value="user">User</option>
-            			</select>
-            		</div>
+                <div class = "input-group">
+                  <label>Company Logo</label>
+                  <input type = "file" name = "filename" value="<?php echo $filename; ?>" style = "border: none;">
+                </div>
+                <div class = "input-group">
+                  <label>Website</label>
+                  <input type = "text" name = "website" value = "<?php echo $website; ?>">
+                </div>
                 <div class = "input-group">
                   <?php if ($update == true): ?>
                     <button class = "btn" type = "submit" name = "update" style = "background: #556b2f;">Update</button>
@@ -206,6 +176,6 @@
             </div>
           </div>
         </div>
-      </main>
+    </main>
   </body>
 </html>

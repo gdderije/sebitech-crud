@@ -1,0 +1,207 @@
+*{
+  box-sizing: border-box;
+}
+
+body{
+  background: url('../images/background.jpg');
+  background-size: cover;
+  font-family: arial;
+  color: #382315;
+  font-size: 13px;
+  margin: 0;
+}
+
+.content{
+	color: white;
+	width: 40%;
+	margin: 0px auto 50px;
+	padding: 20px;
+	background-color: rgba(0, 0, 0, 0.1);
+	border-radius: 0px 0px 10px 10px;
+}
+
+input, select, button{
+  font-family: arial;
+  color: #382315;
+  font-size: 14px;
+  transition: .5s;
+}
+
+input:hover{
+  font-size: 13px;
+}
+
+select{
+  width: 100%;
+  margin-bottom: 10px;
+  padding: 10px 10px;
+}
+
+h2{
+  margin: 0;
+}
+
+img{
+  max-width: 100%;
+}
+
+:focus{
+  outline: none;
+}
+
+.wrapper{
+  min-height: 100vh;
+  background-size: cover;
+  background-repeat: no-repeat;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.inner{
+  padding: 20px;
+  background: #fff;
+  max-width: 850px;
+  margin: auto;
+  display: flex;
+}
+
+.inner .image-holder{
+  width: 50%;
+}
+
+.inner form{
+  width: 50%;
+  padding-top: 36px;
+  padding-left: 45px;
+  padding-right: 45px;
+}
+
+.inner h2{
+  text-transform: uppercase;
+  font-size: 25px;
+  text-align: center;
+  margin-bottom: 28px;
+}
+
+.input-group{
+  display: flex;
+}
+
+.input-group input{
+  width: 100%;
+}
+
+.input-group input:first-child{
+  margin-right: 3px;
+}
+
+.form-wrapper{
+  position: relative;
+}
+
+.form-control{
+  border: 1px solid #382315;
+  border: none;
+  border-bottom: 1px solid #382315;
+  display: block;
+  width: 100%;
+  height: 30px;
+  padding-right: 0;
+  margin-bottom: 25px;
+}
+
+#user_type{
+	height: 40px;
+	width: 98%;
+	padding: 5px 10px;
+	background: white;
+	font-size: 16px;
+	border-radius: 5px;
+	border: 1px solid gray;
+}
+
+select{
+  cursor: pointer;
+  color: gray;
+}
+
+select option[value=""][disabled]{
+  display: none;
+}
+
+button{
+  border: none;
+  width: 164px;
+  height: 51px;
+  margin: auto;
+  margin-top: 40px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-left: 0;
+  background: #382315;
+  font-size: 15px;
+  color: #fff;
+}
+
+button:hover{
+	opacity: 0.8;
+}
+
+.error{
+	width: 92%;
+	margin: 0px auto;
+	padding: 10px;
+	border: 1px solid #a94442;
+	color: #a94442;
+	background: #f2dede;
+	border-radius: 5px;
+	text-align: left;
+}
+
+.success{
+	color: #3c763d;
+	background: #dff0d8;
+	border: 1px solid #3c763d;
+	margin-bottom: 20px;
+}
+
+.profile_info img{
+	display: inline-block;
+	width: 50px;
+	height: 50px;
+	margin: 5px;
+	float: left;
+}
+
+.profile_info div{
+	display: inline-block;
+	margin: 5px;
+}
+
+.profile_info:after{
+	content: "";
+	display: block;
+	clear: both;
+}
+
+@media (max-width: 768px){
+  .inner{
+    display: block;
+  }
+
+  .inner .image-holder{
+    width: 100%;
+  }
+
+  .inner form{
+    width: 100%;
+    padding: 40px 0 30px;
+  }
+
+  button{
+    margin-top: 60px;
+  }
+}
